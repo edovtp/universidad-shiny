@@ -1,12 +1,18 @@
 library(shiny)
 library(shinyFeedback)
 
-
+# GLobal helpers
 implementado <- c("Caminata aleatoria")
+
+# Random walk helpers
+is.naturalnumber <-
+  function(x, tol = .Machine$double.eps^0.5)  x > tol & abs(x - round(x)) < tol
+
 
 # UI implementation
 ui <- fluidPage(
-  titlePanel(strong("EYP2307 - Procesos Estocásticos")),
+  shinyFeedback::useShinyFeedback(),
+  titlePanel("EYP2307 - Procesos Estocásticos"),
   br(),
   sidebarLayout(
     sidebarPanel(
@@ -22,33 +28,46 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  # Parameter inputs creator
+  # Parameter inputs definer
   parameters_ui <- reactive({
     req(input$select)
     if (input$select == "Caminata aleatoria"){
       list(
         numericInput("rw_prob", "p", min = 0, max = 1,
                      step = 0.1, value = 0.5),
-        numericInput("rw_size", "n", min = 1, step = 1, value = 50),
-        # sliderInput("rw_time", "Tiempo", min = 0.01, max = 10, value = 0.5),
-        actionButton("rw_start", "Simular"),
-        br(),br(),
-        # actionButton("rw_stop", "Detener")
+        numericInput("rw_length", "n", min = 1, step = 1, value = 50),
+        actionButton("rw_start", "Simular")
       )
     }
   })
   
-  # Parameter inputs sender
+  # Parameter inputs creator
   output$parameters <- renderUI({
     req(input$select)
-    tagList(
-      parameters_ui()
-    )
+    parameters_ui()
   })
   
   # Random walk
   observeEvent(input$rw_start, {
+    # Validación de inputs
+    message("\n ... Validando inputs ... \n")
+    prob <-  0 <= input$rw_prob && input$rw_prob <= 1
+    natural <- is.naturalnumber(input$rw_length)
     
+    cat("Es la probabilidad válida?", prob, "\n")
+    cat("Es el largo de la cadena válido?", natural, "\n")
+    
+    shinyFeedback::feedbackWarning(
+      "rw_prob",
+      !prob,
+      "Ingrese una probabilidad válida"
+    )
+    
+    shinyFeedback::feedbackWarning(
+     "rw_length",
+     !natural,
+     "Ingrese un largo válido para la cadena"
+    )
   })
 }
 
