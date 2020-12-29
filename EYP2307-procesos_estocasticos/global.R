@@ -1,5 +1,5 @@
 # Global helpers
-implementado <- c("Caminata aleatoria")
+implementado <- c("Caminata aleatoria" = "random_walk")
 
 # Random walk helpers
 is.naturalnumber <-

@@ -1,22 +1,9 @@
 server <- function(input, output, session) {
-  # Parameter inputs definer
-  parameters_ui <- reactive({
+  # Tab panel switcher
+  observe({
     req(input$select)
-    if (input$select == "Caminata aleatoria"){
-      list(
-        numericInput("rw_prob", "p", min = 0, max = 1,
-                     step = 0.1, value = 0.5),
-        numericInput("rw_length", "n", min = 1, step = 1, value = 50),
-        actionButton("rw_start", "Simular")
-      )
-    }
-  })
-  
-  # Parameter inputs creator
-  output$parameters <- renderUI({
-    req(input$select)
-    parameters_ui()
-  })
+    updateTabsetPanel(session, "parameters_tab", input$select)}
+  )
   
   # Random walk
   observeEvent(input$rw_start, {
