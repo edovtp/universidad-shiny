@@ -6,14 +6,12 @@ server <- function(input, output, session) {
   )
   
   # Random walk
+  random_walk <- reactiveVal(NULL)
+  
   observeEvent(input$rw_start, {
     # Validación de inputs
-    message("\n ... Validando inputs ... \n")
-    prob <-  0 <= input$rw_prob && input$rw_prob <= 1
+    prob <-  0 <= input$rw_prob & input$rw_prob <= 1
     natural <- is.naturalnumber(input$rw_length)
-    
-    cat("Es la probabilidad válida?", prob, "\n")
-    cat("Es el largo de la cadena válido?", natural, "\n")
     
     shinyFeedback::feedbackWarning(
       "rw_prob",
@@ -26,5 +24,16 @@ server <- function(input, output, session) {
       !natural,
       "Ingrese un largo válido para la cadena"
     )
+    
+    req(prob, natural)
+    x <- sample(c(-1, 1), input$rw_length,
+                replace = TRUE, prob = c(1 - input$rw_prob, input$rw_prob))
+    y <- cumsum(x)
+    random_walk(y)
+  })
+  
+  output$results <- renderPrint({
+    req(random_walk())
+    random_walk()
   })
 }
