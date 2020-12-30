@@ -5,6 +5,8 @@ library(tibble)
 library(ggthemes)
 
 
+theme_set(theme_bw())
+
 # Global helpers
 implementado <- c("Caminata aleatoria" = "random_walk")
 

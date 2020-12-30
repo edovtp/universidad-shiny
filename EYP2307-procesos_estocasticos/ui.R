@@ -26,7 +26,7 @@ ui <- fluidPage(
       )
     ),
     mainPanel(
-      plotOutput("results")
+      uiOutput("results")
     )
   )
 )
