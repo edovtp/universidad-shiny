@@ -7,7 +7,7 @@ Las siguientes visualizaciones se encuentran implementadas de manera completa:
 ## Librerías utilizadas:
 
 1.  `shiny`: para crear la aplicación.
-2.  `shinyfeedback`: permite dar feedback al usuario ante inputs inválidos.
+2.  `shinyfeedback`: permite dar feedback al usuario ante inputs inválidos
 3.  `ggplot2`: para generar las visualizaciones de la cadena.
 4.  `tibble`: para guardar los atributos de la cadena en un formato amigable.
 5.  `ggthemes`: contiene paletas de colores para personas con daltonismo.
