@@ -1,3 +1,7 @@
+# Variables
+implementado <- c("Caminata aleatoria" = "random_walk")
+
+
 # Random walk parameter tab constructor ----
 
 ui_random_walk <- tabPanel(

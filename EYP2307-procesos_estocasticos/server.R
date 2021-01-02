@@ -35,10 +35,24 @@ server <- function(input, output, session) {
   random_walk <- reactiveVal(NULL)
   
   observeEvent(input$rw_start, {
-    # Input validation
-    # TODO Existing values
+    ### Input validation ----
+    prob_exists = isTruthy(input$rw_prob)
+    length_exists = isTruthy(input$rw_length)
+
+    shinyFeedback::feedbackDanger(
+      "rw_prob",
+      !prob_exists,
+      "Ingrese una probabilidad"
+    )
+
+    shinyFeedback::feedbackDanger(
+      "rw_length",
+      !length_exists,
+      "Ingrese un largo para la cadena"
+    )
     
-    # Valid values
+    req(prob_exists, length_exists)
+
     prob <-  0 <= input$rw_prob & input$rw_prob <= 1
     natural <- is.naturalnumber(input$rw_length)
     
@@ -54,7 +68,7 @@ server <- function(input, output, session) {
       "Ingrese un largo válido para la cadena"
     )
     
-    # Random walk computation
+    ## Computation ----
     req(prob, natural)
     time <- c(0, seq_len(input$rw_length)) 
     x <- c(0, sample(c(-1, 1), input$rw_length,
