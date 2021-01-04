@@ -89,21 +89,16 @@ server <- function(input, output, session) {
   }
   
   ## Random walk static plot----
-  rw_static_plot <- reactive({
-    req(random_walk())
-    
-    rw_base_plot()
-  })
-  
   output$rw_static <- renderPlot({
-    rw_static_plot()
+    req(random_walk())
+    rw_base_plot()
   }, res = 96)
 
   ## Random walk dynamic plot ----
   rw_dynamic_plot <- reactive({
     req(random_walk())
     
-    p <- rw_base_plot() +
+    rw_base_plot() +
       gganimate::transition_reveal(time)
   })
   
@@ -114,14 +109,10 @@ server <- function(input, output, session) {
       "outfile.gif",
       gganimate::animate(rw_dynamic_plot(),
                          renderer = gganimate::gifski_renderer(),
-                         height = 400,
-                         width = 700,
                          res = 96))
     
     list(src = "outfile.gif",
-         contentType = "image/gif",
-         height = 400,
-         width = 700)
+         contentType = "image/gif")
   }, deleteFile = TRUE)
   
   ## Random walk data ----
