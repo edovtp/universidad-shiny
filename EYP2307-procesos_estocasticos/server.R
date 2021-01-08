@@ -1,37 +1,41 @@
 # Main server function
 
 server <- function(input, output, session) {
-  # Tab panel switcher ----
+  # 1. Tab panel switcher ----
   observeEvent(input$select, {
     req(input$select)
     updateTabsetPanel(session, "parameters_tab", input$select)
   })
 
-  # Result panel generator ----
+  # 2. Result panel generator ----
   output$results <- renderUI({
     req(input$select)
+    ## 2.1 Random walk panel ----
     if (input$select == "random_walk"){
       tabsetPanel(
         id = "random_walk_tab",
         type ="tabs",
         tabPanel(
           "Gráfico estático",
+          br(),
           plotOutput("rw_static")
         ),
         tabPanel(
           "Gráfico dinámico",
+          br(),
           imageOutput("rw_dynamic")
         ),
         tabPanel(
           "Cadena",
+          br(),
           dataTableOutput("rw_data")
         )
       )
     }
   })
   
-  # Random walk ----
-  ## Random walk computation ----
+  # 3. Random walk ----
+  ## 3.1 Random walk computation ----
   random_walk <- reactiveVal(NULL)
   
   observeEvent(input$rw_start, {
@@ -77,10 +81,10 @@ server <- function(input, output, session) {
     random_walk(tibble::tibble(time, x, y))
   })
   
-  ## Random walk base plot ----
+  ## 3.2 Random walk base plot ----
   rw_base_plot <- function(){
     colourblind_cols <- ggthemes::colorblind_pal()(3)
-    
+
     ggplot(random_walk(), aes(time, y)) +
       geom_hline(yintercept = 0, col = colourblind_cols[3]) +
       geom_line(col = colourblind_cols[2]) +
@@ -88,13 +92,13 @@ server <- function(input, output, session) {
            x = "Tiempo", y = "Y")
   }
   
-  ## Random walk static plot----
+  ## 3.3 Random walk static plot----
   output$rw_static <- renderPlot({
     req(random_walk())
     rw_base_plot()
   }, res = 96)
 
-  ## Random walk dynamic plot ----
+  ## 3.4 Random walk dynamic plot ----
   rw_dynamic_plot <- reactive({
     req(random_walk())
     
@@ -115,7 +119,7 @@ server <- function(input, output, session) {
          contentType = "image/gif")
   }, deleteFile = TRUE)
   
-  ## Random walk data ----
+  ## 3.5 Random walk data ----
   
   output$rw_data <- renderDataTable({
     req(random_walk())

@@ -1,6 +1,5 @@
-# Variables
+# Variables ----
 implementado <- c("Caminata aleatoria" = "random_walk")
-
 
 # Random walk parameter tab constructor ----
 
@@ -14,6 +13,7 @@ ui_random_walk <- tabPanel(
 
 # Main ui ----
 ui <- fluidPage(
+  theme = shinythemes::shinytheme("sandstone"),
   shinyFeedback::useShinyFeedback(),
   titlePanel("EYP2307 - Procesos Estocásticos"),
   br(),
