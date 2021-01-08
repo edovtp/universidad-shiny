@@ -83,11 +83,11 @@ server <- function(input, output, session) {
   
   ## 3.2 Random walk base plot ----
   rw_base_plot <- function(){
-    colourblind_cols <- ggthemes::colorblind_pal()(3)
+    colourblind_cols <- ggthemes::colorblind_pal()(7)
 
     ggplot(random_walk(), aes(time, y)) +
       geom_hline(yintercept = 0, col = colourblind_cols[3]) +
-      geom_line(col = colourblind_cols[2]) +
+      geom_line(col = colourblind_cols[7]) +
       labs(title = "Visualización de la caminata aleatoria",
            x = "Tiempo", y = "Y")
   }
@@ -113,6 +113,9 @@ server <- function(input, output, session) {
       "outfile.gif",
       gganimate::animate(rw_dynamic_plot(),
                          renderer = gganimate::gifski_renderer(),
+                         height = 600,
+                         width = 800,
+                         units = "px",
                          res = 96))
     
     list(src = "outfile.gif",
