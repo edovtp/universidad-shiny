@@ -16,9 +16,9 @@ ui <- fluidPage(
   theme = shinythemes::shinytheme("sandstone"),
   shinyFeedback::useShinyFeedback(),
   # Ver referencias [1]
-  tags$head(tags$style(".shiny-plot-output{height:70vh !important;}")),
+  tags$head(tags$style(".shiny-plot-output{height:75vh !important;}")),
   # Ver referencias [2]
-  tags$head(tags$style(".shiny-image-output img {width: 100%; height: 70vh}")),
+  tags$head(tags$style(".shiny-image-output img {width: 100%; height: 75vh}")),
   titlePanel("EYP2307 - Procesos Estocásticos"),
   br(),
   sidebarLayout(
