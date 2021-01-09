@@ -18,12 +18,14 @@ server <- function(input, output, session) {
         tabPanel(
           "Gráfico estático",
           br(),
-          plotOutput("rw_static")
+          plotOutput("rw_static") %>% 
+            shinycssloaders::withSpinner(hide.ui = FALSE)
         ),
         tabPanel(
           "Gráfico dinámico",
           br(),
-          imageOutput("rw_dynamic")
+          imageOutput("rw_dynamic") %>% 
+            shinycssloaders::withSpinner(hide.ui = FALSE)
         ),
         tabPanel(
           "Cadena",
@@ -101,6 +103,7 @@ server <- function(input, output, session) {
   ## 3.4 Random walk dynamic plot ----
   rw_dynamic_plot <- reactive({
     req(random_walk())
+
     
     rw_base_plot() +
       gganimate::transition_reveal(time)
@@ -108,7 +111,7 @@ server <- function(input, output, session) {
   
   output$rw_dynamic <- renderImage({
     outfile <- tempfile(fileext = ".gif")
-    
+
     gganimate::anim_save(
       "outfile.gif",
       gganimate::animate(rw_dynamic_plot(),
