@@ -2,7 +2,7 @@
 
 Las siguientes visualizaciones se encuentran implementadas de manera completa:
 
--   [ ] Caminata aleatoria
+-   [x] Caminata aleatoria
 
 ## Librerías utilizadas:
 
@@ -11,6 +11,10 @@ Las siguientes visualizaciones se encuentran implementadas de manera completa:
 3.  `ggplot2`: para generar las visualizaciones de la cadena.
 4.  `tibble`: para guardar los atributos de la cadena en un formato amigable.
 5.  `ggthemes`: contiene paletas de colores para personas con daltonismo.
+6.  `shinythemes`: temas para la aplicación Shiny.
+7.  `thematic`: permite aplicar automáticamente temas de Shiny en gráficos.
+8.  `shinycssloaders`: animaciones de carga para aplicaciones Shiny.
+9.  `sysfonts`: Carga de fonts de google para gráficos dinámicos.
 
 ## Referencias de código
 

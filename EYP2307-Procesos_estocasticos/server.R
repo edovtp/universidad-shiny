@@ -103,10 +103,12 @@ server <- function(input, output, session) {
   ## 3.4 Random walk dynamic plot ----
   rw_dynamic_plot <- reactive({
     req(random_walk())
-
     
     rw_base_plot() +
-      gganimate::transition_reveal(time)
+      gganimate::transition_reveal(time) +
+      theme(
+        text = element_text(size = 9, family = "roboto")
+      )
   })
   
   output$rw_dynamic <- renderImage({
@@ -116,8 +118,8 @@ server <- function(input, output, session) {
       "outfile.gif",
       gganimate::animate(rw_dynamic_plot(),
                          renderer = gganimate::gifski_renderer(),
-                         height = 600,
-                         width = 800,
+                         height = 540,
+                         width = 960,
                          units = "px",
                          res = 96))
     

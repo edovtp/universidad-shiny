@@ -5,9 +5,10 @@ implementado <- c("Caminata aleatoria" = "random_walk")
 
 ui_random_walk <- tabPanel(
   "random_walk",
-  numericInput("rw_prob", "p", min = 0, max = 1,
+  numericInput("rw_prob", "Probabilidad (p)", min = 0, max = 1,
                step = 0.1, value = 0.5),
-  numericInput("rw_length", "n", min = 1, step = 1, value = 1000),
+  numericInput("rw_length", "Largo de la cadena (n)", min = 1, step = 1,
+               value = 1000),
   actionButton("rw_start", "Simular")
 )
 
